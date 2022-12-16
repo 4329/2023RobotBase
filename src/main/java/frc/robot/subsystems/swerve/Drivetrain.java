@@ -10,7 +10,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.math.controller.PIDController;
@@ -106,9 +105,6 @@ public class Drivetrain extends SubsystemBase {
     ySpeed = slewY.calculate(ySpeed);
     rot = slewRot.calculate(rot);
 
-    SmartDashboard.putNumber("xSpeed Commanded", xSpeed);
-    SmartDashboard.putNumber("ySpeed Commanded", ySpeed);
-
     // creates an array of the desired swerve module states based on driver command
     // and if the commands are field relative or not
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
@@ -134,7 +130,6 @@ public class Drivetrain extends SubsystemBase {
     updateOdometry();
 
     // Calls get pose function which sends the Pose information to the
-    // SmartDashboard
     getPose();
   }
 
@@ -145,7 +140,6 @@ public class Drivetrain extends SubsystemBase {
    */
   public void setModuleStates(SwerveModuleState[] desiredStates) {
     SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.kMaxSpeedMetersPerSecond);
-    SmartDashboard.putNumber("desired angle 1", desiredStates[0].angle.getRadians());
     m_frontLeft.setDesiredState(desiredStates[0]);
     m_frontRight.setDesiredState(desiredStates[1]);
     m_backLeft.setDesiredState(desiredStates[2]);
@@ -190,15 +184,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   /**
-   * Function created to retreieve and push the robot pose to the SmartDashboard
-   * for diagnostics
-   *
    * @return Pose2d object containing the X and Y position and the heading of the
-   *         robot.
+   * robot.
    */
   public Pose2d getPose() {
-    SmartDashboard.putNumber("Robot X", m_odometry.getPoseMeters().getX());
-    SmartDashboard.putNumber("Robot Y", m_odometry.getPoseMeters().getY());
+
     return m_odometry.getPoseMeters();
   }
 
