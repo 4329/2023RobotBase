@@ -63,17 +63,17 @@ public class RobotContainer {
     m_drive = new DriveByController(m_robotDrive, m_driverController);
     m_robotDrive.setDefaultCommand(m_drive); // Set drivetrain default command to "DriveByController"
 
-    configureButtonBindings(); /*
-                                * Configure the button bindings to commands using configureButtonBindings
-                                * function
-                                */
-
     m_chooser = new SendableChooser<>();
     configureAutoChooser(drivetrain);
 
     swerveAlignment = new SwerveAlignment(drivetrain);
 
     exampleCommand = new ExampleCommand();
+
+    configureButtonBindings(); /*
+    * Configure the button bindings to commands using configureButtonBindings
+    * function
+    */
   }
 
   /**

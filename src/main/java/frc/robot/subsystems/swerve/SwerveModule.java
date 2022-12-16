@@ -8,8 +8,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -143,15 +141,11 @@ public class SwerveModule {
     // Set the drive motor to the sum of the feedforward calculation and PID
     // calculation
     final double finalDriveOutput = driveOutput + driveFF;
-    SmartDashboard.putNumber("output" + moduleID, finalDriveOutput);
-    SmartDashboard.putNumber("Desired Speed" + moduleID, state.speedMetersPerSecond);
-    SmartDashboard.putNumber("Actual Speed" + moduleID, m_driveEncoder.getVelocity());
     m_driveMotor.set(finalDriveOutput);
     // Calculate the turning motor output from the turning PID controller.
     final double turnOutput = m_turningPIDController.calculate(getTurnEncoder(), state.angle.getRadians());
     // Set the turning motor to this output value
     m_turningMotor.set(turnOutput);
-    SmartDashboard.putNumber("TurnMotor" + moduleID, turnOutput);
   }
 
   public void stop() {
